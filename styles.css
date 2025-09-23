@@ -1,0 +1,307 @@
+:root {
+    --bg1: #0b0f14;
+    --bg2: #0e1320;
+    --acc1: #7c4dff;
+    --acc2: #00e5ff;
+    --acc3: #00ffa3;
+    --glass-bg: color-mix(in oklab, var(--bs-body-bg) 75%, transparent);
+    --glass-bdr: color-mix(in oklab, var(--bs-body-color) 12%, transparent);
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.bg-animated {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background: radial-gradient(1200px 600px at 20% 10%, #1b2940 5%, transparent 50%),
+        radial-gradient(1200px 600px at 80% 20%, #1c2f28 5%, transparent 50%),
+        linear-gradient(120deg, var(--bg1), var(--bg2));
+    filter: saturate(1.1) brightness(0.95);
+    animation: hue 14s linear infinite;
+}
+
+@keyframes hue {
+    0% {
+        filter: hue-rotate(0)
+    }
+
+    100% {
+        filter: hue-rotate(360deg)
+    }
+}
+
+.bg-grid {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+        linear-gradient(var(--grid-color, rgba(255, 255, 255, .05)) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color, rgba(255, 255, 255, .05)) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(60% 60% at 50% 30%, #000 40%, transparent 100%);
+    pointer-events: none;
+}
+
+.glass-nav {
+    background: color-mix(in oklab, var(--bs-body-bg) 65%, transparent);
+    backdrop-filter: blur(10px);
+}
+
+.glassy {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-bdr);
+}
+
+.brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--acc2), var(--acc1));
+    box-shadow: 0 0 12px color-mix(in oklab, var(--acc2) 60%, transparent);
+    display: inline-block;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, var(--acc2), var(--acc1), var(--acc3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .25));
+}
+
+.glow {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.glow:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px color-mix(in oklab, var(--acc2) 20%, transparent);
+}
+
+.status {
+    font-size: .85rem;
+    display: inline-flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.status .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 currentColor;
+    animation: pulse 1.8s infinite;
+}
+
+.status-ok {
+    color: #31d0aa;
+}
+
+.status-build {
+    color: #44b0ff;
+}
+
+.status-warn {
+    color: #f6c741;
+}
+
+.status-ok .dot {
+    background: currentColor;
+}
+
+.status-build .dot {
+    background: currentColor;
+}
+
+.status-warn .dot {
+    background: currentColor;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 currentColor
+    }
+
+    70% {
+        box-shadow: 0 0 0 8px rgba(0, 0, 0, 0)
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0)
+    }
+}
+
+/* Orbs decorativos */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: .35;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.orb-1 {
+    width: 220px;
+    height: 220px;
+    top: -40px;
+    left: -40px;
+    background: #7c4dff;
+}
+
+.orb-2 {
+    width: 260px;
+    height: 260px;
+    right: 60px;
+    top: 20px;
+    background: #00e5ff;
+}
+
+/* Timeline */
+.timeline {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    position: relative;
+}
+
+.timeline li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    position: relative;
+    padding: .5rem 0;
+}
+
+.timeline li::before {
+    content: "";
+    position: absolute;
+    left: .55rem;
+    top: 1.6rem;
+    width: 2px;
+    height: calc(100% - 1.6rem);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .2), transparent);
+}
+
+.timeline .step {
+    width: 24px;
+    height: 24px;
+    display: inline-grid;
+    place-items: center;
+}
+
+.step.ok {
+    background: #153d35;
+    color: #31d0aa;
+    border: 1px solid #2a7a68;
+}
+
+.step.run {
+    background: #1a2f49;
+    color: #44b0ff;
+    border: 1px solid #3a6ea1;
+}
+
+.step.wait {
+    background: #3a3220;
+    color: #f6c741;
+    border: 1px solid #8b6f1a;
+}
+
+/* Terminal */
+.terminal {
+    border-radius: .75rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .75rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+}
+
+.terminal-header .dot {
+    width: .75rem;
+    height: .75rem;
+    border-radius: 50%;
+    opacity: .9;
+}
+
+.terminal-header .dot.red {
+    background: #ff5f56;
+}
+
+.terminal-header .dot.yellow {
+    background: #ffbd2e;
+}
+
+.terminal-header .dot.green {
+    background: #27c93f;
+}
+
+.terminal-header .title {
+    margin-left: auto;
+    font-size: .85rem;
+    color: #cbd5e1;
+}
+
+.terminal-body {
+    margin: 0;
+    padding: 1rem;
+    min-height: 280px;
+    max-height: 50vh;
+    overflow: auto;
+    background: rgba(0, 0, 0, .35);
+    color: #dbeafe;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    border-top: 1px solid rgba(255, 255, 255, .06);
+}
+
+.terminal-body .caret::after {
+    content: " ";
+    display: inline-block;
+    width: 8px;
+    background: currentColor;
+    margin-left: 2px;
+    animation: caret 900ms steps(1) infinite;
+}
+
+@keyframes caret {
+    50% {
+        opacity: 0
+    }
+}
+
+/* Reveal on scroll */
+.reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: .6s ease;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: none;
+}
+
+/* Light/Dark subtle adjustments */
+:root[data-bs-theme='light'] {
+    --grid-color: rgba(0, 0, 0, .06);
+}
+
+/* Buttons micro effect */
+#btnPulse:active,
+#btnVersion1:active,
+#btnDeploy:active {
+    transform: translateY(1px) scale(0.99);
+}
