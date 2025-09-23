@@ -6,6 +6,12 @@
     --acc3: #00ffa3;
     --glass-bg: color-mix(in oklab, var(--bs-body-bg) 75%, transparent);
     --glass-bdr: color-mix(in oklab, var(--bs-body-color) 12%, transparent);
+
+    --cta-grad: linear-gradient(100deg, var(--acc2) 0%, var(--acc1) 50%, var(--acc3) 100%);
+    --cta-shadow: 0 10px 30px color-mix(in oklab, var(--acc2) 20%, transparent),
+        0 2px 8px rgba(0, 0, 0, .3);
+    --wire-glow: 0 0 20px color-mix(in oklab, var(--acc2) 30%, transparent),
+        inset 0 0 20px color-mix(in oklab, var(--acc1) 15%, transparent);
 }
 
 html,
@@ -13,6 +19,7 @@ body {
     height: 100%;
 }
 
+/* Backgrounds */
 .bg-animated {
     position: fixed;
     inset: 0;
@@ -74,16 +81,185 @@ body {
     filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .25));
 }
 
-.glow {
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    transition: transform .2s ease, box-shadow .2s ease;
+/* --------- Botones hermosos --------- */
+.btn {
+    position: relative;
+    overflow: hidden;
+    /* para ripple */
 }
 
-.glow:hover {
+.btn-cta {
+    --r: 14px;
+    border-radius: var(--r);
+    padding: .9rem 1.25rem;
+    color: white;
+    background: var(--cta-grad);
+    background-size: 200% 200%;
+    border: 1px solid color-mix(in oklab, var(--acc2) 40%, transparent);
+    box-shadow: var(--cta-shadow);
+    transition: transform .15s ease, box-shadow .2s ease, background-position .5s ease;
+    will-change: transform;
+}
+
+.btn-cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 30px color-mix(in oklab, var(--acc2) 20%, transparent);
+    background-position: 80% 20%;
+    box-shadow: 0 14px 40px color-mix(in oklab, var(--acc2) 28%, transparent);
 }
 
+.btn-cta:active {
+    transform: translateY(0) scale(.99);
+}
+
+.btn-sheen::after {
+    content: "";
+    position: absolute;
+    inset: -200% -50% auto -50%;
+    height: 300%;
+    transform: rotate(25deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
+    transition: transform .7s ease;
+    pointer-events: none;
+}
+
+.btn-sheen:hover::after {
+    transform: rotate(25deg) translateX(45%);
+}
+
+.btn-ghost {
+    --r: 14px;
+    border-radius: var(--r);
+    padding: .9rem 1.15rem;
+    color: var(--bs-body-color);
+    background: color-mix(in oklab, var(--bs-body-bg) 55%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-bdr);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .04);
+    transition: all .2s ease;
+}
+
+.btn-ghost:hover {
+    background: color-mix(in oklab, var(--bs-body-bg) 75%, transparent);
+    border-color: color-mix(in oklab, var(--acc2) 30%, var(--glass-bdr));
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .25), inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+
+.btn-wire {
+    --r: 14px;
+    border-radius: var(--r);
+    padding: .9rem 1.15rem;
+    color: color-mix(in oklab, var(--acc2) 85%, white);
+    background: transparent;
+    border: none;
+    box-shadow: var(--wire-glow);
+    position: relative;
+    isolation: isolate;
+    transition: transform .15s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.btn-wire::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from 120deg, var(--acc2), var(--acc1), var(--acc3), var(--acc2));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: .9;
+    pointer-events: none;
+}
+
+.btn-wire:hover {
+    transform: translateY(-1px);
+    background: color-mix(in oklab, var(--acc2) 8%, transparent);
+    box-shadow: 0 10px 28px color-mix(in oklab, var(--acc2) 22%, transparent);
+}
+
+.btn-neo {
+    --r: 16px;
+    border-radius: var(--r);
+    padding: .85rem 1.1rem;
+    color: var(--bs-body-color);
+    background: color-mix(in oklab, var(--bs-body-bg) 96%, black 4%);
+    border: 1px solid color-mix(in oklab, var(--bs-body-color) 10%, transparent);
+    box-shadow:
+        10px 10px 20px rgba(0, 0, 0, .35),
+        -8px -8px 18px rgba(255, 255, 255, .02);
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.btn-neo:hover {
+    transform: translateY(-1px);
+    background: color-mix(in oklab, var(--bs-body-bg) 98%, black 2%);
+}
+
+.btn-neo:active {
+    transform: translateY(0);
+    box-shadow:
+        inset 8px 8px 14px rgba(0, 0, 0, .35),
+        inset -6px -6px 12px rgba(255, 255, 255, .02);
+}
+
+.btn-soft {
+    --r: 16px;
+    border-radius: var(--r);
+    padding: .85rem 1.1rem;
+    color: color-mix(in oklab, var(--bs-body-color) 86%, white);
+    background: linear-gradient(135deg,
+            color-mix(in oklab, var(--acc3) 18%, transparent),
+            color-mix(in oklab, var(--acc1) 12%, transparent));
+    border: 1px solid color-mix(in oklab, var(--bs-body-color) 10%, transparent);
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.btn-soft:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+}
+
+/* Micro-animaciones comunes */
+.btn .bi {
+    transition: transform .18s ease;
+}
+
+.btn:hover .bi {
+    transform: translateY(-1px);
+}
+
+/* Ripple */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    background: radial-gradient(circle, rgba(255, 255, 255, .35) 0%, rgba(255, 255, 255, .2) 40%, rgba(255, 255, 255, 0) 70%);
+    animation: ripple .6s ease-out forwards;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Efecto reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: .6s ease;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: none;
+}
+
+/* Estados */
 .status {
     font-size: .85rem;
     display: inline-flex;
@@ -111,14 +287,8 @@ body {
     color: #f6c741;
 }
 
-.status-ok .dot {
-    background: currentColor;
-}
-
-.status-build .dot {
-    background: currentColor;
-}
-
+.status-ok .dot,
+.status-build .dot,
 .status-warn .dot {
     background: currentColor;
 }
@@ -282,24 +452,22 @@ body {
     }
 }
 
-/* Reveal on scroll */
-.reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: .6s ease;
-}
-
-.reveal.revealed {
-    opacity: 1;
-    transform: none;
-}
-
 /* Light/Dark subtle adjustments */
 :root[data-bs-theme='light'] {
     --grid-color: rgba(0, 0, 0, .06);
 }
 
-/* Buttons micro effect */
+/* Buttons micro effect from previous glow */
+.glow {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.glow:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px color-mix(in oklab, var(--acc2) 20%, transparent);
+}
+
+/* Buttons active feedback */
 #btnPulse:active,
 #btnVersion1:active,
 #btnDeploy:active {
